@@ -45,7 +45,7 @@ resource "aws_instance" "bastion_host" {
 
     user_data = <<-EOF
     #!/bin/bash
-    echo "${tls_private_key.bastion_key.private_key_pem}" >> /home/ubuntu/id_rsa.pem
+    echo "${tls_private_key.bastion_key.private_key_pem}" > /home/ubuntu/id_rsa.pem
     # Update and install Python3 and Ansible-core
     apt-get update -y
     apt-get install -y python3 python3-pip
