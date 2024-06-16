@@ -57,7 +57,7 @@ The Terraform configuration will create the following AWS resources:
     ```sh
     terraform apply
     ```
-
+### NOTE: To Generate the bastion host private key RUN --> terraform output -raw bastion_private_key > bastion_key.pem 
 ## Variables
 
 You can customize the deployment by modifying the variables in `variables.tf`.
