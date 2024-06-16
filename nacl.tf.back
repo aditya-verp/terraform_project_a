@@ -1,0 +1,66 @@
+resource "aws_network_acl" "public_nacl" {
+  vpc_id     = aws_vpc.main_vpc.id
+  subnet_ids = [aws_subnet.public_subnet.id]
+
+  ingress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "tcp"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 80
+    to_port    = 80
+  }
+
+  egress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "tcp"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "PublicSubnetNACL"
+    Partof = "TaskProject"
+  }
+}
+
+resource "aws_network_acl" "private_nacl" {
+  vpc_id     = aws_vpc.main_vpc.id
+  subnet_ids = [aws_subnet.private_subnet.id]
+
+  # Ingress rules for HTTP from ALB and SSH from the bastion host
+  ingress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "tcp"
+    cidr_block = var.public_subnet_cidr  # this is where the ALB resides
+    from_port  = 80
+    to_port    = 80
+  }
+
+  ingress {
+    rule_no    = 110
+    action     = "allow"
+    protocol   = "tcp"
+    cidr_block = "0.0.0.0/0"  # Adjust to the actual CIDR of the bastion host if it's more restrictive
+    from_port  = 22
+    to_port    = 22
+  }
+
+  # General egress to allow all outbound
+  egress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "tcp"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "PrivateSubnetNACL"
+    Partof = "TaskProject"
+  }
+}
