@@ -1,4 +1,4 @@
-# Terraform Project A
+# Terraform Project
 
 This repository contains Terraform code to set up an AWS infrastructure including EC2 instances, security groups, and an Application Load Balancer (ALB).
 
