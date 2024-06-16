@@ -105,7 +105,6 @@ resource "tls_private_key" "bastion_key" {
 
 #-------------  Nat Gateway with Elastic IP START    -----------#
 resource "aws_eip" "nat_eip" {
-  domain   = "vpc"
   tags = {
     Name = "NatEIP"
     Partof = "TaskProject"
