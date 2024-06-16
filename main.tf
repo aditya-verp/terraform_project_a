@@ -96,11 +96,6 @@ resource "aws_route_table_association" "private_rta" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_route_table.id
 }
-
-resource "tls_private_key" "bastion_key" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
-}
 #-------------  private_route_table END      -----------#
 
 #-------------  Nat Gateway with Elastic IP START    -----------#
@@ -123,3 +118,8 @@ resource "aws_nat_gateway" "nat_gw" {
   ]
 }
 #-------------  Nat Gateway with Elastic IP END    -----------#
+
+resource "tls_private_key" "bastion_key" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
